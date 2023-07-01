@@ -14,7 +14,7 @@ from src.exception import CustomException
 from src.logger import logging
 
 from src.utils import save_object
-
+from src.components.data_ingestion import DataIngestion
 
 ## Data Transformation config
 
@@ -35,20 +35,18 @@ class DataTransformation:
          try:
             logging.info('Data Transformation initiated')
             # Define which columns should be ordinal-encoded and which should be scaled
-            categorical_cols = ['cut', 'color','clarity']
-            numerical_cols = ['carat', 'depth','table', 'x', 'y', 'z']
+            #categorical_cols = ['cut', 'color','clarity']
+            numerical_cols = ['mean_texture','mean_smoothness','mean_symmetry','area_error','concavity_error','concave_points_error',
+                              'worst_symmetry','worst_fractal_dimension']
             
             # Define the custom ranking for each ordinal variable
-            cut_categories = ['Fair', 'Good', 'Very Good','Premium','Ideal']
-            color_categories = ['D', 'E', 'F', 'G', 'H', 'I', 'J']
-            clarity_categories = ['I1','SI2','SI1','VS2','VS1','VVS2','VVS1','IF']
             
             logging.info('Pipeline Initiated')
 
             ## Numerical Pipeline
             num_pipeline=Pipeline(
                 steps=[
-                ('imputer',SimpleImputer(strategy='median')),
+                #('imputer',SimpleImputer(strategy='median')),
                 ('scaler',StandardScaler())
 
                 ]
@@ -56,23 +54,17 @@ class DataTransformation:
             )
 
             # Categorigal Pipeline
-            cat_pipeline=Pipeline(
-                steps=[
-                ('imputer',SimpleImputer(strategy='most_frequent')),
-                ('ordinalencoder',OrdinalEncoder(categories=[cut_categories,color_categories,clarity_categories])),
-                ('scaler',StandardScaler())
-                ]
-
-            )
 
             preprocessor=ColumnTransformer([
-            ('num_pipeline',num_pipeline,numerical_cols),
-            ('cat_pipeline',cat_pipeline,categorical_cols)
+            ('num_pipeline',num_pipeline,numerical_cols)
+            #('cat_pipeline',cat_pipeline,categorical_cols)
             ])
             
+            logging.info('Pipeline Completed')
+
             return preprocessor
 
-            logging.info('Pipeline Completed')
+            
 
          except Exception as e:
             
@@ -95,8 +87,8 @@ class DataTransformation:
 
             preprocessing_obj = self.get_data_transformation_object()
 
-            target_column_name = 'price'
-            drop_columns = [target_column_name,'id']
+            target_column_name = 'target'
+            drop_columns = [target_column_name]
 
             ## features into independent and dependent features
 
@@ -135,6 +127,8 @@ class DataTransformation:
             logging.info("Exception occured in the initiate_datatransformation")
 
             raise CustomException(e,sys)
+
+
 
 
 

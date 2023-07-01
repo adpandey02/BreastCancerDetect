@@ -25,7 +25,7 @@ class DataIngestion:
         logging.info('Data Ingestion method starts')
 
         try:
-            df=pd.read_csv(os.path.join('notebook/data','breastcancerdata.csv'))
+            df=pd.read_csv(os.path.join('notebook/data','cleaned.csv'))
             logging.info('Dataset read as pandas Dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path),exist_ok=True)
@@ -52,9 +52,7 @@ class DataIngestion:
             logging.info('Error occured in Data Ingestion config')
 
 
-if __name__ == "__main__":
-    i  = DataIngestion()
-    i.initiate_data_ingestion()
+
 
 
 
