@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from src.exception import CustomException
 from src.logger import logging
+import dill
 
 from sklearn.metrics import r2_score,mean_absolute_error,mean_squared_error,accuracy_score
 
@@ -27,8 +28,6 @@ def evaluate_reg_model(X_train,y_train,X_test,y_test,models):
             model = list(models.values())[i]
             # Train model
             model.fit(X_train,y_train)
-
-            
 
             # Predict Testing data
             y_test_pred =model.predict(X_test)
@@ -73,7 +72,7 @@ def evaluate_clf_model(X_train,y_train,X_test,y_test,models):
 def load_object(file_path):
     try:
         with open(file_path,'rb') as file_obj:
-            return pickle.load(file_obj)
+            return dill.load(file_obj)
     except Exception as e:
         logging.info('Exception Occured in load_object function utils')
         raise CustomException(e,sys)

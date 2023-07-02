@@ -1,0 +1,54 @@
+<html>
+<body>
+<form action="{{ url_for('predict_datapoint') }}" method="POST">
+    <div class="form-group">
+        <label for="mean_texture">mean_texture:</label>
+        <input type="number" id="mean_texture" name="mean_texture" step="any">
+    </div>
+
+    <div class="form-group">
+        <label for="mean_smoothness">mean_smoothness:</label>
+        <input type="number" id="mean_smoothness" name="mean_smoothness" step="any">
+    </div>
+
+    <div class="form-group">  
+        <label for="mean_symmetry">mean_symmetry:</label>
+        <input type="number" id="mean_symmetry" name="mean_symmetry" step="any">
+    </div>
+    
+    <div class="form-group">
+        <label for="area_error">area_error:</label>
+        <input type="number" id="area_error" name="area_error" step="any">
+    </div>
+  
+    <div class="form-group">
+        <label for="concavity_error">concavity_error:</label>
+        <input type="number" id="concavity_error" name="concavity_error" step="any">
+    </div>
+  
+    <div class="form-group">
+        <label for="concave_points_error">concave_points_error:</label>
+        <input type="number" id="concave_points_error" name="concave_points_error" step="any">
+    </div>
+    
+    <div class="form-group">
+        <label for="worst_symmetry">worst_symmetry:</label>
+        <input type="number" id="worst_symmetry" name="worst_symmetry" step="any">
+    </div> 
+
+    <div class="form-group">
+        <label for="worst_fractal_dimension">worst_fractal_dimension:</label>
+        <input type="number" id="worst_fractal_dimension" name="worst_fractal_dimension" step="any">
+    </div> 
+
+     <div style="clear:both;" class="'button">   
+        <input type="submit" value="Submit">
+     </div>
+</form>
+
+<h1>Result Corner</h1>
+<h2> 1 --- breast cancer positive </h2>
+<h2> 0 --- breast cancer negative </h2>
+<h1>Result : {{final_result}}</h1>
+</body>
+</html>
